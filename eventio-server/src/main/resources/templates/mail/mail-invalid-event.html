@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Invalid event</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel="stylesheet" type='text/css'>
+
+    <link href='mail.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<table class="table table-sm">
+    <tr>
+        <td>
+            <p>Dear User,</p>
+            <p>
+                Some of your events became invalid, because their locations were removed from our service.
+                <br/>
+                You can remove this events from our system by yourself.
+                <br/>
+                Event id's:
+            <ul>
+                <li th:each="id : ${#strings.arraySplit(ids, ', ')}" th:text="${id}"></li>
+            </ul>
+            <br/>
+            But if you want to remove this events automatically, please, click here:
+            <br/>
+            <br/>
+            <a class="btn btn-info" href="http://localhost:3000/profile/remove-invalid-events">
+                AUTO FIX
+            </a>
+            </p>
+            <p>Thanks</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>EVENTIO - eventio.localtunnel.me</p>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

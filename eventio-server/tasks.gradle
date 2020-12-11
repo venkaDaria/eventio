@@ -1,0 +1,86 @@
+/**
+ * Overrides default build task,
+ * can be used with --console=verbose to show called tasks
+ */
+
+build { finalizedBy(tasks['docker']) }
+
+// excluded files for coverage
+final def excludes = [
+        "**/com/example/venka/eventio/config/security/**",
+        "**/com/example/venka/eventio/config/bootstrap/**",
+]
+
+/**
+ * Docker Support
+ *
+ * @use ./gradlew build docker
+ */
+docker {
+    name "${project.group}/${jar.baseName}"
+    println "==> Docker task for ${name}"
+    dockerfile project.file('src/main/docker/Dockerfile')
+    files jar.archivePath
+    buildArgs(['JAR_FILE': "${jar.archiveName}"])
+}
+
+/**
+ * SonarQube Support
+ *
+ * @use ./gradlew sonarqube
+ */
+sonarqube {
+    properties {
+        property "sonar.exclusions", excludes
+    }
+}
+
+/**
+ * JaCoCo Support
+ *
+ * @use ./gradlew test [jacocoTestReport]
+ */
+apply plugin: "jacoco"
+
+jacoco {
+    toolVersion = "0.8.1"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+
+        html.destination file("$buildDir/jacocoHtml")
+    }
+
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: excludes)
+        })
+    }
+
+    // open http://localhost:63342/eventio-server/build/jacocoHtml/index.html
+}
+
+// must be called before JaCoCo tasks
+test {
+    // testng support
+    useTestNG()
+
+    jacoco {
+        append = false
+    }
+
+    // calls jacocoTestReport
+    finalizedBy jacocoTestReport
+}
+
+/**
+ * Sets Gradle version
+ *
+ * @use ./gradlew wrapper
+ */
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.5.1'
+}

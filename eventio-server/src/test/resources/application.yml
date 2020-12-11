@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: simple
+
+  # for autowiring JavaSenderMail
+  mail:
+    host: localhost
+    port: 3025

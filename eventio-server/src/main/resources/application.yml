@@ -1,0 +1,48 @@
+# for DevBootstrap - recreate or just clean database
+database:
+  recreated: none # [clean create none]
+
+# Spring properties
+spring:
+  profiles:
+    active: docker
+  data:
+    neo4j:
+     uri: bolt://neo4j:7687/eventio-db
+     username: neo4j
+     password: admin
+  mail:
+    port: 587
+    username: no-reply@eventio.com
+    password: P7AdminSupport
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: false
+            trust: mail
+          auth: true
+          starttls:
+            enable: true
+          protocols: TLSv1.2
+
+# Profiles properties
+---
+
+spring:
+  profiles: docker
+  data:
+    neo4j:
+     uri: bolt://neo4j:7687/eventio-db
+  mail:
+    host: mail
+
+---
+
+spring:
+  profiles: simple
+  data:
+    neo4j:
+     uri: bolt://localhost:7687/eventio-db
+  mail:
+    host: localhost

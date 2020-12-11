@@ -1,0 +1,89 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  color: #e1e1df !important; /* see colors */
+  background: linear-gradient(to right, rgb(15, 12, 41), rgb(48, 43, 99),
+    rgb(36, 36, 62)); /* https://uigradients.com/#Lawrencium */
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.aboutBg-en {
+  background: url('./assets/i18n/about-en.png') no-repeat center center !important;
+          background-size: contain !important;
+          background-color: rgba(225, 225, 223, 0.2) !important;
+          background-blend-mode: color;
+}
+
+.aboutBg-ru {
+  background: url('./assets/i18n/about-ru.png') no-repeat center center !important;
+          background-size: contain !important;
+          background-color: rgba(225, 225, 223, 0.2) !important;
+          background-blend-mode: color;
+}
+
+.aboutBg-ua {
+  background: url('./assets/i18n/about-ua.png') no-repeat center center !important;
+          background-size: contain !important;
+          background-color: rgba(225, 225, 223, 0.2) !important;
+          background-blend-mode: color;
+}
+
+.abcRioButtonContents {
+  display: none !important
+}
+
+table {
+  background-color: #e1e1df !important; /* see colors */
+  color: rgba(4, 21, 51, 1) !important; /* see colors */
+}
+
+thead {
+  background-color: rgba(4, 21, 51, 0.3) !important;  /* see colors */
+  background-blend-mode: color;
+}
+
+span.hovered:hover {
+  color: #c14430 !important  /* see colors */
+}
+
+fa:hover, far:hover, fas:hover {
+  cursor: pointer
+}
+
+.react-datepicker__input-container {
+  width: 250px
+}
+
+.react-datepicker__close-icon::after {
+  top: 30% !important;
+}
+
+.react-datepicker__time-list {
+  padding-left: 0
+}
+
+hr {
+  background-color: transparent;
+  border-top: 1px solid #e1e1df !important; /* see colors */
+}
+
+.jumbotron {
+  padding: 10px !important
+}
+
+.jumbotron label {
+  color: black;
+}
+
+svg {
+  display: block;
+  margin: auto;
+}

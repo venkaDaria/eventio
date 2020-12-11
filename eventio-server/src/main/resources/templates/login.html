@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Please Login</title>
+    <meta name="google-signin-client_id"
+          content="232914740001-snvpi7uoc67c10et2avim7u8rglgim4a.apps.googleusercontent.com">
+    <script async defer src="https://apis.google.com/js/platform.js?onload=renderButton&hl=en"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+        function onSuccess(googleUser) {
+            const tokens = googleUser.Zi; // getAuthResponse()
+            const profile = googleUser.getBasicProfile();
+
+            $.post({
+                url: "/login",
+                data: {
+                    email: profile.getEmail(),
+                    password: tokens.access_token
+                }
+            })
+        }
+
+        function onFailure(error) {
+            console.log(error);
+        }
+
+        function renderButton() {
+            gapi.signin2.render('my-signin2', {
+                'scope': 'profile email',
+                'width': 240,
+                'height': 50,
+                'longtitle': true,
+                'theme': 'dark',
+                'onsuccess': onSuccess,
+                'onfailure': onFailure
+            });
+        }
+    </script>
+</head>
+<body th:with="content=~{::content}">
+<div th:fragment="content">
+    <div id="my-signin2"></div>
+</div>
+</body>
+</html>

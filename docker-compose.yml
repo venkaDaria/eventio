@@ -1,0 +1,83 @@
+version: '3'
+
+services:
+  neo4j:
+    image: neo4j
+    environment:
+      - NEO4J_AUTH=neo4j/admin
+    ports:
+      - 7474:7474
+      - 7687:7687
+  eventio-server:
+    image: com.example.venka/eventio-server
+    links:
+      - neo4j
+      - sonarqube
+      - mail
+    depends_on:
+      - neo4j
+      - sonarqube
+      - mail
+    ports:
+      - 8080:8080
+      - 50505:50505
+    build:
+      context: ./eventio-server
+      dockerfile: ./src/main/docker/Dockerfile
+      args:
+        - JAR_FILE=./build/docker/eventio-server-0.0.1-SNAPSHOT.jar
+  localtunnel:
+    restart: always
+    image: efrecon/localtunnel
+    depends_on:
+      - eventio-server
+    links:
+      - eventio-server
+    command:
+      ./eventio.sh wait-for eventio-server locatunnel --local-host eventio-server --port 8080 --subdomain eventio
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar
+  sonarqube:
+    image: sonarqube
+    links:
+      - postgres
+    depends_on:
+      - postgres
+    environment:
+      - SONARQUBE_JDBC_URL=jdbc:postgresql://postgres:5432/sonar
+    # bind my plugins
+    volumes:
+      - ./sonarqube_extensions:/opt/sonarqube/extensions
+    ports:
+      - 9000:9000
+      - 9002:9002
+    # copy downloaded plugins
+    command: >
+      bash -c "cp -r /opt/sonarqube/lib/bundled-plugins/. /opt/sonarqube/extensions/plugins
+      && /opt/sonarqube/bin/run.sh"
+  eventio-client:
+    image: com.example.venka/eventio-client
+    ports:
+     - 3000:3000
+    # load files
+    volumes:
+     - ./eventio-client/src:/eventio-client/src
+     - ./eventio-client/public:/eventio-client/public
+    build:
+     context: ./eventio-client
+    environment:
+     - NODE_ENV=development
+  mail:
+    image: tvial/docker-mailserver
+    hostname: mail
+    domainname: eventio.com
+    ports:
+      - "25:25"
+      - "143:143"
+      - "587:587"
+      - "993:993"
+    volumes:
+      - ./config/postfix-accounts.cf:/tmp/docker-mailserver/postfix-accounts.cf

@@ -1,0 +1,10 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+}
+
+table {
+    border-collapse: collapse;
+    border: 0;
+    width: 300px;
+}

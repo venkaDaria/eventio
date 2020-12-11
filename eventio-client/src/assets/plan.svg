@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1210 600"
+     preserveAspectRatio="xMidYMid meet">
+
+    <rect x="102" y="59" id="e1_rectangle" width="287" height="216"
+      fill="transparent" stroke="black" />
+    <rect x="389" y="178" id="e2_rectangle" width="422" height="374"
+      rx="0" ry="0" fill="transparent" stroke="black"/>
+    <rect x="681" y="56" id="e3_rectangle" width="418" height="122"
+      fill="transparent" stroke="black"/>
+    <rect x="811" y="178" id="e4_rectangle" width="288" height="289"
+      rx="0" ry="0" fill="transparent" stroke="black"/>
+</svg>

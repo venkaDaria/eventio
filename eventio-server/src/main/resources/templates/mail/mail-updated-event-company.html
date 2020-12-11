@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>New Event</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel="stylesheet" type='text/css'>
+
+    <link href='mail.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<table class="table table-sm">
+    <tr>
+        <td>
+            <p>Dear User,</p>
+            <p th:inline="text">
+                One of events in your places has been updated.
+                <br/>
+                You can look at this event with this link.
+                <br/>
+                [[${link}]]
+            </p>
+            <p>Thanks</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>EVENTIO - eventio.localtunnel.me</p>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
